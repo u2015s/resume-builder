@@ -51,9 +51,16 @@
             </p>
         <% end %>
 
+        <%= render 'shared/profile/profile_section_card', title: "Experiences and Projects" do %>
+            <%= render partial: 'shared/profile/experiences', collection: profile.experiences %>
+        <% end %>
+
+
         <%= render 'shared/profile/profile_section_card', title: "Education" do %>
             <%= render partial: 'shared/profile/education', collection: profile.educations %>
         <% end %>
+
+        
     </div>
 
 </div>

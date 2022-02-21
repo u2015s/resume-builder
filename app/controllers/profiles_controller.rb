@@ -6,6 +6,7 @@ class ProfilesController < ApplicationController
     before_action :correct_user,   only: [:update]
 
     def update
+        puts "update route"
         updated_profile_params = update_array_attributes_in_params(profile_params)
         @profile = Profile.find(params[:id])
         if @profile.update(updated_profile_params)
@@ -27,7 +28,9 @@ class ProfilesController < ApplicationController
         def profile_params
             params.require(:profile).permit(:name, :job_title, :total_experience, :overview, 
                 :career_highlights, :primary_skills, :secondary_skills,
-                :educations_attributes => [ :id, :school, :degree, :description, :start, :end, :_destroy]
+                :educations_attributes => [ :id, :school, :degree, :description, :start, :end, :_destroy],
+                :experiences_attributes => [ :id, :company, :position, :description, :start, :end, :_destroy],
+                :projects_attributes => [ :id, :title, :project_url, :description, :tech_stack, :experience_id,:profile_id,:_destroy]
             )
         end
 end

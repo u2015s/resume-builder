@@ -12,4 +12,9 @@ class HomeController < ApplicationController
     end
   end
 
+  # def update
+  #   logged_in_user
+    
+  # end
+
 end
