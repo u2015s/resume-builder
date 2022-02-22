@@ -14,13 +14,13 @@
         <%= render 'shared/edit_section', title: "Profile details" do %>
             <%= f.text_field :name, value: @profile.name || current_user.name, placeholder: "Name" %><br/>
             <div class="flex items-center my-4">
-                <label class="py-2 px-4 flex justify-start items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg mr-4">
+                <label class="py-2 px-2 flex justify-start items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg mr-2">
                 Upload Image
-                    <div style="display:none"> 
+                    <div style="margin-left:15px"> 
                                         <%= f.file_field :image%>
                     </div>
                 </label>
-              
+                    
                     <% if current_user.profile.image_url!=nil%>
                         <%= image_tag current_user.profile.image_url,
                                     id: "image-preview", style:"max-width:200px"
