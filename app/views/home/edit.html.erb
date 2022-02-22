@@ -1,9 +1,12 @@
 <%= render 'shared/header' %>
+<%= javascript_pack_tag 'my_js' %>
 
 <main class="py-10 max-w-7xl mx-auto px-4 sm:px-8">
-    <%= form_for(@profile, builder: TailwindInputBuilder) do |f| %>
+    <%= form_for(@profile, builder: TailwindInputBuilder,html: { multipart: true }) do |f| %>
         <div class="flex justify-end items-center w-full mb-4">
             <div>
+            <%= link_to "Copy Link",profile_path(id: @profile.id), id: "copy-button", class: "py-2 px-4 border-2 border-white-600 text-purple-600 hover:text-purple-700 text-center text-base font-semibold shadow-md hover:shadow-none focus:outline-none rounded-lg" %>
+                <%= link_to "Preview",profile_path(id: @profile.id),target: '_blank', class: "py-2 px-4 mx-2 border-2 border-white-600 text-purple-600 hover:text-purple-700 text-center text-base font-semibold shadow-md hover:shadow-none focus:outline-none rounded-lg" %>
                 <%= f.submit "Save", class: "flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-green-200" %><br/>
             </div>
         </div>
@@ -13,11 +16,23 @@
             <div class="flex items-center my-4">
                 <label class="py-2 px-4 flex justify-start items-center bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg mr-4">
                 Upload Image
-                        <%= f.file_field :image, multiple: true, name: 'picture'%>
+                    <div style="display:none"> 
+                                        <%= f.file_field :image%>
+                    </div>
                 </label>
-                <%= image_tag gravatar_url_for(current_user), 
-                    id: "image-preview", style:"max-width:200px"
-                %>
+              
+                    <% if current_user.profile.image_url!=nil%>
+                        <%= image_tag current_user.profile.image_url,
+                                    id: "image-preview", style:"max-width:200px"
+                        %>
+                    <%else%>
+                        <%= image_tag gravatar_url_for(current_user), 
+                                    id: "image-preview", style:"max-width:200px"
+                        %>
+                    <%end%>
+
+                
+                
             </div>
             <%= f.text_field :job_title, value: @profile.job_title, placeholder: "Job title" %><br/>
             <%= f.text_field :total_experience, value: @profile.total_experience, placeholder: "Total experience" %><br/>

@@ -6,8 +6,13 @@ class ProfilesController < ApplicationController
     before_action :correct_user,   only: [:update]
 
     def update
-        puts "update route"
+        
         updated_profile_params = update_array_attributes_in_params(profile_params)
+        
+        # puts "Hello world"
+        # puts params[:profile] 
+        # puts updated_profile_params
+
         @profile = Profile.find(params[:id])
         if @profile.update(updated_profile_params)
             flash[:success] = "Profile updated successfully."
@@ -24,10 +29,20 @@ class ProfilesController < ApplicationController
         redirect_to(root_url) unless @user == current_user
     end
 
+    def show
+        if(Profile.exists?(params[:id]))
+            @profile = Profile.find(params[:id])
+            @user = User.find(@profile.user_id)
+            render "show"
+        else
+            flash[:danger] = "Profile Not Found"
+            redirect_to root_url
+        end
+    end
     private
         def profile_params
             params.require(:profile).permit(:name, :job_title, :total_experience, :overview, 
-                :career_highlights, :primary_skills, :secondary_skills,
+                :career_highlights, :primary_skills, :secondary_skills,:image,
                 :educations_attributes => [ :id, :school, :degree, :description, :start, :end, :_destroy],
                 :experiences_attributes => [ :id, :company, :position, :description, :start, :end, :_destroy],
                 :projects_attributes => [ :id, :title, :project_url, :description, :tech_stack, :experience_id,:profile_id,:_destroy]

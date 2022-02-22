@@ -8,6 +8,8 @@ class Profile < ApplicationRecord
 
     belongs_to :user
 
+    mount_uploader :image, ProfileImageUploader 
+
     def reject_education_create(education)
         education[:degree].blank? or education[:school].blank? or education[:start].blank? or education[:end].blank?
     end
