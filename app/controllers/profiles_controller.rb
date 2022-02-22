@@ -8,11 +8,7 @@ class ProfilesController < ApplicationController
     def update
         
         updated_profile_params = update_array_attributes_in_params(profile_params)
-        
-        # puts "Hello world"
-        # puts params[:profile] 
-        # puts updated_profile_params
-
+    
         @profile = Profile.find(params[:id])
         if @profile.update(updated_profile_params)
             flash[:success] = "Profile updated successfully."
